@@ -72,19 +72,6 @@ API: [Yahoo Finance via RapidAPI](https://rapidapi.com/apidojo/api/yahoo-finance
 
 ---
 
-## 📂 Структура
-
-📁 telegram-weather-stock-bot/
-├─ 📄 README.md
-├─ 📄 bot-workflow.json
-└─ 📄 LICENSE
-
-yaml
-Копировать
-Редактировать
-
----
-
 ## 📌 Пример использования
 
 **Пользователь:** `Лондон`  
