@@ -1,0 +1,560 @@
+{
+  "name": "Temp and Stocks",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d5e60eb2-267c-4f68-aefe-439031bcaceb",
+      "name": "OpenAI Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        80,
+        580
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "rAXkndIu9vfk92Q1",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -40,
+        440
+      ],
+      "id": "ea48959c-7b84-4ede-9444-a5171b383958",
+      "name": "Telegram Trigger",
+      "webhookId": "84d607ab-0f6e-42ad-a25a-84b11f54d0a8",
+      "credentials": {
+        "telegramApi": {
+          "id": "oKslVCCbWGGKa9Zj",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Сегодня {{ $json.current.temp_c }}°C, отличный день, можно надеть футболку.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        580
+      ],
+      "id": "c7d92c55-1e36-4c8c-b9bb-399e1599046b",
+      "name": "Telegram",
+      "webhookId": "206aba11-93e7-4ef3-a432-9e5e1bb14f95",
+      "credentials": {
+        "telegramApi": {
+          "id": "oKslVCCbWGGKa9Zj",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.text }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        200,
+        580
+      ],
+      "id": "8455badb-a60f-459b-87ee-0484a495eec2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "You are an assistant in an n8n-powered Telegram bot.\n\nYour job is:\n1. Translate the user's message into English (if necessary).\n2. Extract the city name and the NASDAQ stock ticker of a company (if any).\n3. Return only a valid JSON object in the following format — no explanations, no comments, no text before or after the JSON:\n\n{\n  \"city\": \"<city name in English, or null>\",\n  \"ticker\": \"<NASDAQ stock ticker in uppercase, or null>\"\n}\n\n❗Important:\n- Only return a valid JSON object — nothing else.\n- If a value is not found, return `null`.\n- The stock ticker must be the official NASDAQ symbol (e.g., 'AAPL' for Apple, 'MSFT' for Microsoft).\n- If the company is mentioned by name, convert it to its corresponding NASDAQ ticker if available.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        100,
+        440
+      ],
+      "id": "6be4a949-abb5-495f-98d1-04b9d7ad3a54",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fab8a738-6e8e-4e26-b508-e4c7f3d75f40",
+              "leftValue": "={{ $json.current.temp_c }}",
+              "rightValue": 15,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        680
+      ],
+      "id": "c3c78506-d0d3-4b06-9b7d-ea8abe2ce807",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Сегодня {{ $json.current.temp_c }}°C, холодно, надень куртку.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        780
+      ],
+      "id": "6a9a62f2-2318-4737-895d-d144e2da85eb",
+      "name": "Telegram1",
+      "webhookId": "206aba11-93e7-4ef3-a432-9e5e1bb14f95",
+      "credentials": {
+        "telegramApi": {
+          "id": "oKslVCCbWGGKa9Zj",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const parsed = JSON.parse(items[0].json.output);\nreturn [{ json: parsed }]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        440
+      ],
+      "id": "d716804d-f4ab-4550-93b4-bfa543b1f4ae",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=Текущее значение акций {{ $json[\"Global Quote\"][\"01. symbol\"] }}: {{ $json[\"Global Quote\"][\"05. price\"] }}$",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        360
+      ],
+      "id": "fc1afc9e-93f4-4cec-81d5-c421b8de5b9f",
+      "name": "Telegram2",
+      "webhookId": "206aba11-93e7-4ef3-a432-9e5e1bb14f95",
+      "credentials": {
+        "telegramApi": {
+          "id": "oKslVCCbWGGKa9Zj",
+          "name": "Telegram account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "11SmjzIDbWdFURwypUR1Kn1KBhlSa6dWYTMkjJuLrMiA",
+          "mode": "list",
+          "cachedResultName": "n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11SmjzIDbWdFURwypUR1Kn1KBhlSa6dWYTMkjJuLrMiA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11SmjzIDbWdFURwypUR1Kn1KBhlSa6dWYTMkjJuLrMiA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Reply": "=Текущее значение акций {{ $json[\"Global Quote\"][\"01. symbol\"] }}: {{ $json[\"Global Quote\"][\"05. price\"] }}$",
+            "ChatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+            "Question": "={{ $('Telegram Trigger').item.json.message.text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ChatId",
+              "displayName": "ChatId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Question",
+              "displayName": "Question",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reply",
+              "displayName": "Reply",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1160,
+        180
+      ],
+      "id": "c911107b-a92a-47c4-ae16-4e4676c52018",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "HB0ohxtmy1c3kceP",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3710e246-103f-4880-9864-0845a3575faf",
+              "leftValue": "={{ $json.ticker }}",
+              "rightValue": "={{ $json.city }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        540,
+        440
+      ],
+      "id": "93896561-7183-4aae-a6cc-557bc4fc52ad",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "url": "=https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={{ $json.ticker }}&apikey=d18jkv1r01qg5218fk30d18jkv1r01qg5218fk3g",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        260
+      ],
+      "id": "d3384768-cfeb-427e-b669-9cbe8f7f9f3d",
+      "name": "HTTP Request NASDAQ.",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "url": "=http://api.weatherapi.com/v1/current.json?key=fdc5f4583f2c45cc8cc94418251606&q={{ $json.city }}&aqi=no\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        680
+      ],
+      "id": "1180bcc2-4a3f-4914-9998-d180a7f0fdc1",
+      "name": "HTTP Request weatherapi"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7c509e0e-5180-436e-9114-bc5c9ffc10d8",
+              "leftValue": "={{ $json.ticker }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        440
+      ],
+      "id": "0855d986-f989-41ff-8124-ef9d342c2ae8",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=Пожалуйста, укажите город,\nназвание компании или её тикер на NASDAQ.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        260
+      ],
+      "id": "ab0bef9e-8f52-4713-8fed-1b4c21072c82",
+      "name": "ответ на не корректный ввод",
+      "webhookId": "206aba11-93e7-4ef3-a432-9e5e1bb14f95",
+      "credentials": {
+        "telegramApi": {
+          "id": "epQvM3gsRZgqtWlD",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        []
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "ответ на не корректный ввод",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request NASDAQ.": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request weatherapi": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request NASDAQ.",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request weatherapi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ответ на не корректный ввод": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e24772c4-e1aa-4f12-b0f0-afb6ea6a74fc",
+  "meta": {
+    "templateId": "self-building-ai-agent",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7ff3acd0046132fd4be6166755ef1ead08782c2c29817a4f3454d4d78f337242"
+  },
+  "id": "1lWbzMS513G6tXGl",
+  "tags": []
+}
