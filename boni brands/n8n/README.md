@@ -62,7 +62,7 @@ API: [Yahoo Finance via RapidAPI](https://rapidapi.com/apidojo/api/yahoo-finance
 1. Создайте бота через [@BotFather](https://t.me/BotFather)
 2. Зарегистрируйтесь на [WeatherAPI](https://www.weatherapi.com/)
 3. Получите API-ключ на [RapidAPI (Yahoo Finance)](https://rapidapi.com/apidojo/api/yahoo-finance1)
-4. Создайте Google Таблицу с нужными колонками (`timestamp`, `message`, `type`, `response`)
+4. Создайте Google Таблицу с нужными колонками (`ChatId`, `Question`, `Reply`)
 5. Импортируйте `workflow.json` в n8n
 6. Настройте переменные и креды:
    - Telegram Bot Token
