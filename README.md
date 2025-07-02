@@ -1,11 +1,11 @@
 # 📂 test-tasks
 
-Цей репозиторій містить мої рішення тестових завдань, наданих різними ІТ-компаніями в рамках співбесід чи відбору на вакансії.
+This repository contains my solutions to test tasks provided by various IT companies as part of interviews or job selection.
 
-Кожне завдання розміщено в окремій директорії із збереженням оригінальної структури.
+Each task is placed in a separate directory, preserving the original structure.
 
-## 🧑‍💻 Ціль
+## 🧑‍💻 Goal
 
-- Продемонструвати мої технічні навички та вміння адаптуватися до різних типів завдань.
-- Показати підхід до вирішення реальних завдань, наближених до робочих кейсів.
-- Зберігати історію виконання тестів та прогрес у професійному розвитку.
+- Demonstrate my technical skills and ability to adapt to different types of tasks.
+- Show an approach to solving real-world tasks, close to work cases.
+- Keep a history of test performance and progress in professional development.
