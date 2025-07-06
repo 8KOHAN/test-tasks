@@ -22,7 +22,7 @@ A Python-based pipeline to **fetch**, **measure**, and **store** historical stoc
 
 - **Python**
 - `yfinance`, `pandas`, `psycopg2`, `dotenv`
-- **PostgreSQL
+- **PostgreSQL**
 
 ---
 
