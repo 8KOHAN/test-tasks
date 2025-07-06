@@ -1,10 +1,10 @@
-# 📈 SP500 Data Loader
+# SP500 Data Loader
 
 A Python-based pipeline to **fetch**, **measure**, and **store** historical stock data from Yahoo Finance for selected S&P 500 companies. Data is saved to a PostgreSQL database with support for multiple timeframes (`1d`, `1h`, `5m`).
 
 ---
 
-## ✅ Features
+## Features
 
 - Pulls historical stock data using `yfinance`
 - Supports three timeframes:
@@ -18,7 +18,7 @@ A Python-based pipeline to **fetch**, **measure**, and **store** historical stoc
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 - **Python**
 - `yfinance`, `pandas`, `psycopg2`, `dotenv`
@@ -26,17 +26,17 @@ A Python-based pipeline to **fetch**, **measure**, and **store** historical stoc
 
 ---
 
-## 🗂️ Directory Structure
+## Directory Structure
 ```bash
 SP500_DATA_LOADER/
 ├── data/
-│ └── tickers.csv # List of ticker symbols
+│ └── tickers.csv
 ├── ddl/
-│ └── structure.sql # SQL schema for PostgreSQL
+│ └── structure.sql
 ├── scripts/
-│ ├── main.py # Pipeline entry point
-│ ├── fetch_data.py # Downloads data using yfinance
-│ ├── save_to_db.py # Inserts data into PostgreSQL
-│ └── measure_perf.py # Utility to time functions
+│ ├── main.py
+│ ├── fetch_data.py
+│ ├── save_to_db.py
+│ └── measure_perf.py
 ├── requirements.txt
 ├── .gitignore
