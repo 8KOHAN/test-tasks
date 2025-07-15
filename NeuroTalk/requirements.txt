@@ -1,0 +1,7 @@
+aiogram
+openai
+google-api-python-client
+google-auth-oauthlib
+google-auth
+python-dotenv
+aiohttp
