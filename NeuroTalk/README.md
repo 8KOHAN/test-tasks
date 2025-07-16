@@ -1,4 +1,4 @@
-## Project Structure
+## Structure
 ```bash
 bot/
 ├── handlers/
