@@ -40,3 +40,4 @@ SP500_DATA_LOADER/
 │ └── measure_perf.py
 ├── requirements.txt
 ├── .gitignore
+├── README.md
