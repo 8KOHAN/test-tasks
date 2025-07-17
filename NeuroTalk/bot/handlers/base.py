@@ -2,7 +2,7 @@ from aiogram import Router, types
 from aiogram.filters import CommandStart
 from datetime import datetime, timedelta
 
-from services.openai_client import ask_gpt
+from services.llm_client import ask_llm
 from services.calendar import list_free_slots, create_appointment
 from services.dialog_state import add_to_history, dialog_history
 from utils.formatting import format_datetime_for_user
@@ -46,12 +46,12 @@ async def handle_user_message(message: types.Message):
                     await message.answer("Вибачте, сталася помилка при записі 😔")
                     return
 
-    # GPT-обробка — звичайне повідомлення
+    # Підготовка prompt для локальної LLM
     add_to_history(user_id, "user", message.text)
     history = dialog_history.get(user_id, [])
     messages = [{"role": "system", "content": SYSTEM_PROMPT}] + history
 
-    reply = await ask_gpt(messages)
+    reply = await ask_llm(messages)
     add_to_history(user_id, "assistant", reply)
     await message.answer(reply)
 
