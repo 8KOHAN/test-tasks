@@ -3,5 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4")
+LLM_MODEL = os.getenv("LLM_MODEL", "gemma:7b")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+GOOGLE_CALENDAR_ID = os.getenv("GOOGLE_CALENDAR_ID")
+GOOGLE_CREDENTIALS_FILE = os.getenv("GOOGLE_CREDENTIALS_FILE", "credentials.json")
