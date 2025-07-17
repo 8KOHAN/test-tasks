@@ -1,5 +1,5 @@
+ollama
 aiogram
-openai
 google-api-python-client
 google-auth-oauthlib
 google-auth
