@@ -10,7 +10,7 @@ bot/
 ├── services/
 │   ├── calendar.py
 │   ├── dialog_state.py
-│   └── openai_client.py
+│   └── llm_client.py
 ├── utils/
 │   ├── formatting.py
 │   ├── slot_parser.py
