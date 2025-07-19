@@ -48,6 +48,6 @@ A sleek and practical **Telegram store bot** for browsing and purchasing **phone
 │   ├── fsm_states.py
 │   └── keyboards/
 │       ├── admin_kb.py  
-│       ├── user_kb.py
+│       ├── reply_kp.py
 │       ├── inline_kb.py
 ```
