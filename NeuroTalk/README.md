@@ -32,14 +32,21 @@
 ## Project Structure
 
 ```bash
-NeuroTalk/
-├── bot/
-│ ├── main.py # bot entry point
-│ ├── handlers/ # message handlers
-│ └── prompts/ # system_prompt for LLM
+bot/
+├── handlers/
+│   ├── base.py
+│   ├── booking.py
+│   └── start.py
+├── keyboards/                       
+│   └── reply.py            
+├── prompts/
+│   └── system_prompt.txt
 ├── services/
-│ └── calendar_client.py # Google Calendar integration
-├── .env # environment variables
-├── credentials.json # Google Service Account key
-└── README.md
+│   └── llm_client.py
+├── utils/
+│   └── text_utils.py
+├── config.py
+└── main.py
+.env
+requirements.txt
 ```
