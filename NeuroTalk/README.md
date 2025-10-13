@@ -12,14 +12,6 @@
 
 ---
 
-## Technologies
-
-- `Python 3.10+`
-- `Aiogram` 
-- `gemma:7b` (LLM)
-
----
-
 ## Project Structure
 
 ```bash
