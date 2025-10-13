@@ -1,53 +1,54 @@
 # Telegram Weather & Stocks Bot (n8n)
 
-**Тестовое задание для позиции программиста.**  
-Бот работает на платформе [n8n.io](https://n8n.io) и умеет выполнять две функции:
+**Test task for a programmer position.**
 
-1. Сообщать погоду в указанном городе.
-2. Показывать текущую цену акций NASDAQ-компаний.
+The bot runs on the [n8n.io](https://n8n.io) platform and can perform two functions:
 
-Все действия пользователя логируются в Google Таблицу.
+1. Report the weather in a specified city.
+2. Show the current stock prices of NASDAQ companies.
+
+All user actions are logged in a Google Sheet.
 
 ---
 
-## Функциональность
+## Functionality
 
-### Погода
-Пользователь отправляет название города — бот сообщает температуру и советует, надевать ли куртку.
+### Weather
+The user submits the name of the city—the bot reports the temperature and advises whether to wear a jacket.
 
-- Если температура ниже 15°C → бот говорит:  
-  `Сегодня {{температура}} градусов, холодно, одень куртку.`
-- Если 15°C и выше →  
-  `Сегодня {{температура}} градусов, отличный день, можно бегать в футболке.`
+- If the temperature is below 15°C → the bot says:
+`Today is {{temperature}} degrees, it's cold, put on a jacket.`
+- If it's 15°C or higher →
+`Today is {{temperature}} degrees, it's a nice day, you can run in a t-shirt.`
 
 API: [WeatherAPI](https://www.weatherapi.com/api-explorer.aspx)
 
 ---
 
-### Цена акций
-Пользователь отправляет название компании или тикер — бот сообщает актуальную цену акций на NASDAQ.
+### Stock Price
+The user submits the company name or ticker symbol – the bot returns the current stock price on NASDAQ.
 
 API: [Yahoo Finance via RapidAPI](https://rapidapi.com/apidojo/api/yahoo-finance1)
 
 ---
 
-## Обработка ошибок
-Бот корректно:
-- определяет, когда введено нечто нераспознаваемое (ни город, ни компания)
-- даёт ответ: “Не удалось определить запрос. Попробуйте ещё раз.”
+## Error Handling
+The bot correctly:
+- detects when something unrecognizable is entered (neither a city nor a company)
+- responds: "Unable to identify the request. Try again."
 
 ---
 
-## Логирование
-Все запросы и ответы логируются в **Google Таблицу**:
-- Дата и время
-- Введённый текст
-- Тип запроса (погода/акции/ошибка)
-- Ответ бота
+## Logging
+All requests and responses are logged in a Google Sheet:
+- Date and time
+- Entered text
+- Request type (weather/stocks/error)
+- Bot response
 
 ---
 
-## Технологии
+## Technologies
 
 - [n8n Cloud](https://n8n.io)
 - Telegram Bot API
@@ -57,25 +58,25 @@ API: [Yahoo Finance via RapidAPI](https://rapidapi.com/apidojo/api/yahoo-finance
 
 ---
 
-## Установка и запуск
+## Installation and Launch
 
-1. Создайте бота через [@BotFather](https://t.me/BotFather)
-2. Зарегистрируйтесь на [WeatherAPI](https://www.weatherapi.com/)
-3. Получите API-ключ на [RapidAPI (Yahoo Finance)](https://rapidapi.com/apidojo/api/yahoo-finance1)
-4. Создайте Google Таблицу с нужными колонками (`ChatId`, `Question`, `Reply`)
-5. Импортируйте `workflow.json` в n8n
-6. Настройте переменные и креды:
-   - Telegram Bot Token
-   - WeatherAPI Key
-   - RapidAPI Key + Host
-   - Доступ к Google Sheets
+1. Create a bot via [@BotFather](https://t.me/BotFather)
+2. Register with [WeatherAPI](https://www.weatherapi.com/)
+3. Get an API key from [RapidAPI (Yahoo Finance)](https://rapidapi.com/apidojo/api/yahoo-finance1)
+4. Create a Google Sheet with with the required columns (`ChatId`, `Question`, `Reply`)
+5. Import `workflow.json` into n8n
+6. Configure variables and credentials:
+- Telegram Bot Token
+- WeatherAPI Key
+- RapidAPI Key + Host
+- Google Sheets Access
 
 ---
 
-## Пример использования
+## Usage Example
 
-**Пользователь:** `Лондон`  
-**Ответ:** `Сегодня 12 градусов, холодно, одень куртку.`
+**User:** `London`
+**Response:** `It's 12 degrees today, cold, put on a jacket.`
 
-**Пользователь:** `AAPL`  
-**Ответ:** `Текущая цена акций AAPL: $184.97`
+**User:** `AAPL`
+**Response:** `The current AAPL stock price is $184.97`
