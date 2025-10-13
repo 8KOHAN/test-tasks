@@ -10,19 +10,19 @@ router = Router()
 @router.message(F.text == "/start")
 async def cmd_start(message: Message):
     is_admin = message.from_user.id in ADMIN_IDS
-    await message.answer("Привет! Выберите действие:", reply_markup=user_reply_kb(is_admin))
+    await message.answer("Hello! Choose an action:", reply_markup=user_reply_kb(is_admin))
 
-@router.message(F.text == "Категории")
+@router.message(F.text == "Categories")
 async def show_categories(message: Message):
-    await message.answer("Выберите категорию:", reply_markup=category_buttons())
+    await message.answer("Select a category:", reply_markup=category_buttons())
 
-@router.message(F.text == "Поддержка")
+@router.message(F.text == "Support")
 async def support_message(message: Message):
-    await message.answer("Обратитесь в @Alexeikohan для связи.")
+    await message.answer("Contact @telegram_name for communication")
 
-@router.message(F.text == "🔧 Админка")
+@router.message(F.text == "🔧 Admin panel")
 async def admin_access(message: Message):
     if message.from_user.id in ADMIN_IDS:
-        await message.answer("Добро пожаловать в админ-панель", reply_markup=admin_main_kb())
+        await message.answer("Welcome to the admin panel", reply_markup=admin_main_kb())
     else:
-        await message.answer("⛔ У вас нет доступа к админ-панели.")
+        await message.answer("⛔ You don't have access to the admin panel")
