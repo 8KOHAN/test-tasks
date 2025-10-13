@@ -46,7 +46,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "text": "=Сегодня {{ $json.current.temp_c }}°C, отличный день, можно надеть футболку.",
+        "text": "=Today is {{ $json.current.temp_c }}°C, a nice day to wear a t-shirt.",
         "additionalFields": {
           "appendAttribution": false
         }
@@ -134,7 +134,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "text": "=Сегодня {{ $json.current.temp_c }}°C, холодно, надень куртку.",
+        "text": "=Today it's {{ $json.current.temp_c }}°C, cold, wear a jacket",
         "additionalFields": {
           "appendAttribution": false
         }
@@ -171,7 +171,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
-        "text": "=Текущее значение акций {{ $json[\"Global Quote\"][\"01. symbol\"] }}: {{ $json[\"Global Quote\"][\"05. price\"] }}$",
+        "text": "=Current stock price {{ $json[\"Global Quote\"][\"01. symbol\"] }}: {{ $json[\"Global Quote\"][\"05. price\"] }}$",
         "additionalFields": {
           "appendAttribution": false
         }
@@ -212,7 +212,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Reply": "=Текущее значение акций {{ $json[\"Global Quote\"][\"01. symbol\"] }}: {{ $json[\"Global Quote\"][\"05. price\"] }}$",
+            "Reply": "=Current stock price {{ $json[\"Global Quote\"][\"01. symbol\"] }}: {{ $json[\"Global Quote\"][\"05. price\"] }}$",
             "ChatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
             "Question": "={{ $('Telegram Trigger').item.json.message.text }}"
           },
@@ -369,7 +369,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
-        "text": "=Пожалуйста, укажите город,\nназвание компании или её тикер на NASDAQ.",
+        "text": "=Please provide the city, company name, or NASDAQ ticker symbol",
         "additionalFields": {
           "appendAttribution": false
         }
@@ -381,7 +381,7 @@
         260
       ],
       "id": "ab0bef9e-8f52-4713-8fed-1b4c21072c82",
-      "name": "ответ на не корректный ввод",
+      "name": "response to incorrect input",
       "webhookId": "206aba11-93e7-4ef3-a432-9e5e1bb14f95",
       "credentials": {
         "telegramApi": {
@@ -480,7 +480,7 @@
       "main": [
         [
           {
-            "node": "ответ на не корректный ввод",
+            "node": "response to incorrect input",
             "type": "main",
             "index": 0
           }
@@ -539,7 +539,7 @@
         ]
       ]
     },
-    "ответ на не корректный ввод": {
+    "response to incorrect input": {
       "main": [
         []
       ]
