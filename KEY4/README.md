@@ -26,7 +26,7 @@ A Python-based pipeline to **fetch**, **measure**, and **store** historical stoc
 
 ---
 
-## Directory Structure
+## Structure
 ```bash
 SP500_DATA_LOADER/
 ├── data/
