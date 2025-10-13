@@ -4,7 +4,7 @@ This repository contains my solutions to test tasks provided by various IT compa
 
 Each task is placed in a separate directory, preserving the original structure.
 
-## Goal
+## Goals
 
 - Demonstrate my technical skills and ability to adapt to different types of tasks.
 - Show an approach to solving real-world tasks, close to work cases.
